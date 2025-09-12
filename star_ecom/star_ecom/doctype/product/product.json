@@ -13,7 +13,7 @@
   "section_break_jexi",
   "images",
   "section_break_mvmj",
-  "product_descirption"
+  "description"
  ],
  "fields": [
   {
@@ -39,13 +39,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "product_descirption",
-   "fieldtype": "Markdown Editor",
-   "in_list_view": 1,
-   "label": "Descirption",
-   "reqd": 1
-  },
-  {
    "fieldname": "section_break_jexi",
    "fieldtype": "Section Break"
   },
@@ -60,12 +53,19 @@
    "fieldtype": "Attach Image",
    "label": "Preview Image",
    "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Markdown Editor",
+   "in_list_view": 1,
+   "label": "Descirption",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-09-11 07:26:21.833530",
+ "modified": "2025-09-11 08:23:12.863661",
  "modified_by": "Administrator",
  "module": "Star Ecom",
  "name": "Product",

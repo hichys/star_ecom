@@ -1,2 +1,7 @@
 @import "./assets/Inter/inter.css";
 @import "frappe-ui/src/style.css";
+
+
+@them {
+    --font-primary : "Tajawal", "sans-serif"
+}
