@@ -1,5 +1,4 @@
 <template>
-  {{ doc.price }}
   <p>Product Details Page</p>
 
   <div class="grid grid-cols-2 gap-6">
@@ -36,12 +35,13 @@
       <!-- Required amount -->
       <div class="p-2">
         <FormControl
-          type="number"
+             :type="'number'"
+           :ref_for="true"
           size="xl"
           variant="outline"
           placeholder="القيمة بالآلاف (مثال: 100 = 100 ألف)"
           label="القيمة المطلوبة"
-          v-model="inputValue"
+           v-model="inputValue"
         />
       </div>
 
@@ -70,19 +70,12 @@
     </div>
   </div>
 
-  <button
-    class="mt-5"
-    size="xl"
-    variant="solid"
-    @click="orderDoc.submit()"
-  >
-    تأكيد الطلب
-  </button>
+ 
 </template>
 
 <script setup>
 import { createDocumentResource, createResource } from 'frappe-ui'
-import { computed, ref, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import ProductCard from '../componets/ProductCard.vue'
 import { formatCurrency } from '../utils'
@@ -101,7 +94,6 @@ const productDoc = createDocumentResource({
   auto: true,
 })
 const doc = computed(() => productDoc.doc)
-
 // update grand total automatically
 watch(inputValue, (val) => {
   if (doc.value.price) {
@@ -110,22 +102,35 @@ watch(inputValue, (val) => {
 })
  
 // create order
- 
-    const items = [
-      {
-        product: "Bankak",
-        qty: 122,
-        rate: doc.price,
-        total: 33 * doc.price
-      } ]
-  const orderDoc = createResource({
-    url:'star_ecom.api.place_order',
-    makeParams(){
-      return {
-        products : items
-      }
+
+ // reactive items (always up-to-date)
+const items = computed(() => {
+  const qty = inputValue.value
+  const rate = doc.value?.price || 0
+  const total = qty * rate
+
+  return [
+    {
+      // make sure keys match your child table: product, qty, rate, total
+      product: "Bankak",
+      qty,
+      rate,
+      total,
     }
-  }) 
+  ]
+})
+
+// order resource uses items.value so backend receives the latest values
+const orderDoc = createResource({
+  url: 'star_ecom.api.place_order',
+  makeParams() {
+    return {
+      products: items.value,
+      city: autocompleteValue.value,
+      delivery_request: delivery_request.value
+    }
+  }
+})
 
 
  
