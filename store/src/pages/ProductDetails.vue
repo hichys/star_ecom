@@ -79,7 +79,7 @@ import { computed, reactive, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import ProductCard from '../componets/ProductCard.vue'
 import { formatCurrency } from '../utils'
-
+import {useToast} from 'vue-toast-notification';
 // form values 
 const autocompleteValue = ref('طرابلس')
 const inputValue = ref(0)
@@ -119,7 +119,7 @@ const items = computed(() => {
     }
   ]
 })
-
+import ToastPlugin from 'vue-toast-notification';
 // order resource uses items.value so backend receives the latest values
 const orderDoc = createResource({
   url: 'star_ecom.api.place_order',
@@ -129,6 +129,10 @@ const orderDoc = createResource({
       city: autocompleteValue.value,
       delivery_request: delivery_request.value
     }
+  },
+  onSuccess(order){
+   const $toast = useToast();
+  let instance = $toast.success('Order has Been Created ');
   }
 })
 

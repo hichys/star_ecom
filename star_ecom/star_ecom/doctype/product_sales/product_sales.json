@@ -12,6 +12,7 @@
   "delivery_request",
   "date",
   "time",
+  "phone_number",
   "section_break_waxt",
   "items",
   "section_break_ucym",
@@ -96,12 +97,18 @@
    "fieldname": "delivery_request",
    "fieldtype": "Check",
    "label": "Delivery Request"
+  },
+  {
+   "default": "+218-",
+   "fieldname": "phone_number",
+   "fieldtype": "Phone",
+   "label": "Phone Number"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-09-12 23:22:48.290246",
+ "modified": "2025-09-14 16:07:53.704985",
  "modified_by": "Administrator",
  "module": "Star Ecom",
  "name": "Product Sales",
