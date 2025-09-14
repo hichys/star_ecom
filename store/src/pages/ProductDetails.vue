@@ -1,6 +1,5 @@
 <template>
-  <p>Product Details Page</p>
-  {{ phone_number }}
+  <p>Order Details</p>
 
   <div class="grid grid-cols-2 gap-6">
     <!-- Left side: Product card -->
@@ -12,6 +11,7 @@
         :price="formatCurrency(doc?.price, doc?.currency)"
         :buttonText="'تأكيد الطلب'"
         :loading="orderDoc.loading"
+        :disabled="orderDoc.loading || !isValidPhone || !inputValue || inputValue <= 0"
       />
     </div>
 
@@ -49,15 +49,15 @@
   </p>
 </div>
       <!-- Required amount -->
-      <div class="p-2">
+      <div class="p-2" required="true">
         <FormControl
-             :type="'number'"
-           :ref_for="true"
+          :type="'number'"
+          :ref_for="true"
           size="xl"
           variant="outline"
           placeholder="القيمة بالآلاف (مثال: 100 = 100 ألف)"
           label="القيمة المطلوبة"
-           v-model="inputValue"
+          v-model="inputValue"
         />
       </div>
 
@@ -147,20 +147,22 @@ const orderDoc = createResource({
   makeParams() {
     return {
       products: items.value,
-      city: autocompleteValue.value,
+      city: autocompleteValue.value.label,
       delivery_request: delivery_request.value,
       phone_number:phone_number.value,
     }
   },
   onSuccess(order){
     const $toast = useToast();
-    let instance = $toast.success("your Order has been Created with id " + order, {
+    let id = $toast.success("your Order has been Created with id " + order, {
       position: 'top-right',
       duration: 3000,
       dismissible: true,
       pauseOnHover: true,
       queue: false,
+     
     });
+  
   }
 })
 

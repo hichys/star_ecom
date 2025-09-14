@@ -66,10 +66,15 @@
         <span class="text-2xl font-bold text-gray-900 dark:text-white">
           {{ props.price }}
         </span>
-        <button  @click="$emit('select', product)"
-          class=" font-primary w-full h-11 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition"
+        <button
+          :disabled="props.disabled"
+          @click.stop="$emit('select', props)"
+          class="font-primary w-full h-11 text-sm font-medium text-white bg-blue-700 
+                 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg 
+                 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 
+                 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
-         {{ buttonText }}
+          {{ props.buttonText }}
         </button>
       </div>
     </div>
@@ -87,7 +92,12 @@ const props = defineProps({
   buttonText: {
     type: String,
     default: "اطلب الان" // fallback if parent doesn't provide text
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
+
 });
 defineEmits(['select'])
 </script>
