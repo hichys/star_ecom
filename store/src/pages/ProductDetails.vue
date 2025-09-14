@@ -1,5 +1,6 @@
 <template>
   <p>Product Details Page</p>
+  {{ phone_number }}
 
   <div class="grid grid-cols-2 gap-6">
     <!-- Left side: Product card -->
@@ -31,7 +32,22 @@
           v-model="autocompleteValue"
         />
       </div>
-
+      <!-- Phone Number -->
+       <div class="p-2">
+  <TextInput
+    type="tel"
+    ref-for="true"
+    size="sm"
+    variant="subtle"
+    placeholder="رقم الموبايل"
+    v-model="phone_number"
+    :maxlength="10"
+    @input="validatePhone"
+  />
+  <p v-if="!isValidPhone && phone_number" class="text-red-500 text-sm mt-1">
+    يجب إدخال رقم صحيح مثل 0911122233
+  </p>
+</div>
       <!-- Required amount -->
       <div class="p-2">
         <FormControl
@@ -85,7 +101,7 @@ const autocompleteValue = ref('طرابلس')
 const inputValue = ref(0)
 const grand_total = ref(0)
 const delivery_request = ref(false)
-
+const phone_number = ref("")
 // fetch product doc
 const route = useRoute()
 const productDoc = createDocumentResource({
@@ -100,7 +116,12 @@ watch(inputValue, (val) => {
     grand_total.value = val * doc.value.price
   }
 })
- 
+const isValidPhone = ref(true);
+ const validatePhone = () => {
+  // Regex: starts with 09 and followed by 8 digits
+  const pattern = /^09\d{8}$/;
+  isValidPhone.value = pattern.test(phone_number.value);
+};
 // create order
 
  // reactive items (always up-to-date)
@@ -127,12 +148,19 @@ const orderDoc = createResource({
     return {
       products: items.value,
       city: autocompleteValue.value,
-      delivery_request: delivery_request.value
+      delivery_request: delivery_request.value,
+      phone_number:phone_number.value,
     }
   },
   onSuccess(order){
-   const $toast = useToast();
-  let instance = $toast.success('Order has Been Created ');
+    const $toast = useToast();
+    let instance = $toast.success("your Order has been Created with id " + order, {
+      position: 'top-right',
+      duration: 3000,
+      dismissible: true,
+      pauseOnHover: true,
+      queue: false,
+    });
   }
 })
 
