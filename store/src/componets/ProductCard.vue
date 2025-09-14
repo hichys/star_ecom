@@ -66,10 +66,10 @@
         <span class="text-2xl font-bold text-gray-900 dark:text-white">
           {{ props.price }}
         </span>
-        <button
+        <button  @click="$emit('select', product)"
           class=" font-primary w-full h-11 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition"
         >
-         اطلب الان
+         {{ buttonText }}
         </button>
       </div>
     </div>
@@ -84,5 +84,10 @@ const props = defineProps({
   image: String,
   description: String,
   price: String,
+  buttonText: {
+    type: String,
+    default: "اطلب الان" // fallback if parent doesn't provide text
+  }
 });
+defineEmits(['select'])
 </script>

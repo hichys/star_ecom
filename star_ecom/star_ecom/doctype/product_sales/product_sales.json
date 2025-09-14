@@ -7,7 +7,9 @@
  "field_order": [
   "user",
   "status",
+  "city",
   "column_break_nqcf",
+  "delivery_request",
   "date",
   "time",
   "section_break_waxt",
@@ -83,12 +85,23 @@
   {
    "fieldname": "column_break_xjtm",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "default": "0",
+   "fieldname": "delivery_request",
+   "fieldtype": "Check",
+   "label": "Delivery Request"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-09-12 19:39:22.971396",
+ "modified": "2025-09-12 23:22:48.290246",
  "modified_by": "Administrator",
  "module": "Star Ecom",
  "name": "Product Sales",
