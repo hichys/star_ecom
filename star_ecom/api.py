@@ -12,7 +12,7 @@ def place_order(products,city,delivery_request,phone_number):
 		new_order.status = "Pending"
 		new_order.city = city
 		new_order.delivery_request = delivery_request
-		new_order.phone_number = '+218-0920821334'
+		new_order.phone_number = '+218-'+phone_number 
 		new_order.set("items",products)
 		new_order.grand_total = get_total_amount(products)
 		new_order.insert(ignore_permissions=True)
